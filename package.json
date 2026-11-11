@@ -1,0 +1,15 @@
+{
+  "name": "sentinel-shield-browser",
+  "version": "1.0.0",
+  "description": "Next-Gen Cyber Security & Threat Prevention Web Browser",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": ["browser", "security", "phishing-detector", "cybersecurity", "electron"],
+  "author": "Louis-XIV",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.0.0"
+  }
+}
