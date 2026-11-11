@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SENTINEL // Cyber Security Browser</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Window Titlebar -->
+  <header class="titlebar">
+    <div class="brand">
+      <span class="cyber-glitch" data-text="SENTINEL">SENTINEL</span>
+      <span class="version-tag">CYBER-ENGINE v4.0</span>
+    </div>
+    <div class="window-controls">
+      <button id="min-btn"><i class="fa-solid fa-minus"></i></button>
+      <button id="max-btn"><i class="fa-regular fa-square"></i></button>
+      <button id="close-btn" class="close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+  </header>
+
+  <!-- Navigation Bar -->
+  <nav class="browser-nav">
+    <div class="nav-actions">
+      <button id="back-btn" title="Back"><i class="fa-solid fa-arrow-left"></i></button>
+      <button id="forward-btn" title="Forward"><i class="fa-solid fa-arrow-right"></i></button>
+      <button id="reload-btn" title="Refresh"><i class="fa-solid fa-rotate-right"></i></button>
+    </div>
+
+    <!-- Smart Address & Threat Bar -->
+    <div class="address-container">
+      <div id="shield-icon" class="status-shield secure" title="System Protected">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <input type="text" id="url-bar" placeholder="Enter URL or search query safely..." spellcheck="false" autocomplete="off" />
+      <span id="trust-indicator" class="trust-badge">TRUST: 100%</span>
+    </div>
+
+    <div class="nav-tools">
+      <button id="threat-panel-toggle" class="glow-button"><i class="fa-solid fa-satellite-dish"></i> LIVE INTEL</button>
+      <button id="demo-attack-toggle" class="glow-button warning"><i class="fa-solid fa-biohazard"></i> ATTACK LAB</button>
+    </div>
+  </nav>
+
+  <!-- Main View Area -->
+  <main class="viewport">
+    <webview id="web-engine" src="https://www.wikipedia.org" allowpopups="false"></webview>
+
+    <!-- Threat Interception Overlay -->
+    <div id="lockdown-overlay" class="overlay hidden">
+      <div class="lockdown-card">
+        <div class="card-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <h1>CONNECTION ABORTED BY SENTINEL</h1>
+        <p class="subtitle">A malicious vector targeting this session was actively identified and intercepted.</p>
+        
+        <div class="details-box">
+          <p><strong>Target URL:</strong> <span id="threat-url-disp"></span></p>
+          <p><strong>Risk Severity:</strong> <span id="threat-level-disp" class="danger-tag">CRITICAL</span></p>
+          <ul id="threat-reasons-list"></ul>
+        </div>
+
+        <div class="action-buttons">
+          <button id="abort-btn" class="btn primary">Return to Safe Territory</button>
+          <button id="bypass-btn" class="btn secondary">Ignore & Proceed (Unsafe)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Telemetry Drawer -->
+    <aside id="intel-panel" class="intel-drawer hidden">
+      <div class="intel-header">
+        <h3><i class="fa-solid fa-terminal"></i> THREAT TELEMETRY</h3>
+        <button id="intel-close-btn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="intel-metrics">
+        <div class="metric-card">
+          <span class="metric-num" id="trackers-blocked-count">0</span>
+          <span class="metric-label">Trackers & Spyware Intercepted</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-num" id="heuristics-score">100/100</span>
+          <span class="metric-label">Domain Safety Index</span>
+        </div>
+      </div>
+      <div class="intel-log">
+        <h4>ACTIVITY AUDIT</h4>
+        <ul id="intel-logs-list">
+          <li class="log-neutral">[ENGINE] Heuristic network filter initialized.</li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Exhibition Demo Attack Trigger Panel -->
+    <aside id="demo-panel" class="intel-drawer hidden">
+      <div class="intel-header">
+        <h3><i class="fa-solid fa-flask"></i> EXHIBITION LABS</h3>
+        <button id="demo-close-btn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <p class="demo-description">Run live simulated attacks to show visitors how Sentinel catches zero-day tricks:</p>
+      <div class="demo-actions">
+        <button class="attack-demo-btn" data-url="http://insecure-bank-login.xyz/paypal-verification">
+          <span>Phishing Link Simulation</span>
+          <small>Unencrypted, high-risk TLD, credential trigger words</small>
+        </button>
+        <button class="attack-demo-btn" data-url="https://xn--pple-43d.com">
+          <span>Homograph Attack (Punycode)</span>
+          <small>Fake lookalike domain (аpple.com using Cyrillic 'а')</small>
+        </button>
+        <button class="attack-demo-btn" data-url="https://verify-your-bank-securely.com">
+          <span>Blacklisted Malware Database</span>
+          <small>Known C2 malware and credential-harvesting server</small>
+        </button>
+        <button class="attack-demo-btn" data-url="http://neverssl.com">
+          <span>Insecure HTTP / Downgrade Attack</span>
+          <small>Triggers cleartext transport vulnerability warning</small>
+        </button>
+      </div>
+    </aside>
+  </main>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
