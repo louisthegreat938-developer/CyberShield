@@ -12,7 +12,7 @@ function createWindow() {
     height: 900,
     minWidth: 1024,
     minHeight: 700,
-    backgroundColor: '#05070d',
+    backgroundColor: '#f8fafc',
     frame: false, // Custom futuristic header
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
