@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Sentinel // Autonomous Cyber-Defense Browser</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
+            },
+            surface: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              200: '#e2e8f0',
+              300: '#cbd5e1',
+              800: '#1e293b',
+              900: '#0f172a',
+            }
+          },
+          boxShadow: {
+            'soft': '0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03)',
+            'glass': '0 20px 40px -15px rgba(37, 99, 235, 0.08), 0 0 1px 1px rgba(226, 232, 240, 0.8)',
+            'glow': '0 0 25px -5px rgba(37, 99, 235, 0.25)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Subtle background grid pattern */
+    .cyber-grid-light {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(226, 232, 240, 0.5) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(226, 232, 240, 0.5) 1px, transparent 1px);
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    @keyframes pulse-subtle {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.03); opacity: 0.9; }
+    }
+    .pulse-optic {
+      animation: pulse-subtle 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-surface-50 text-surface-900 font-sans antialiased selection:bg-brand-100 selection:text-brand-900 min-h-screen flex flex-direction flex-col">
+
+  <!-- Navigation Bar -->
+  <header class="sticky top-0 z-50 glass-card border-b border-surface-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Brand Logo + Name -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-sky-400 p-0.5 shadow-soft group-hover:shadow-glow transition-all duration-300">
+          <div class="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
+            <!-- Sentinel Custom Vector SVG Icon -->
+            <svg class="w-6 h-6 text-brand-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="url(#shield-grad)" fill-opacity="0.12" stroke="currentColor"/>
+              <path d="M12 8v4" stroke="#2563eb" stroke-width="2.2"/>
+              <circle cx="12" cy="15.5" r="1" fill="#2563eb"/>
+              <path d="M9 12h6" stroke="#38bdf8" stroke-dasharray="1 2"/>
+              <defs>
+                <linearGradient id="shield-grad" x1="4" y1="2" x2="20" y2="22">
+                  <stop stop-color="#2563eb" />
+                  <stop offset="1" stop-color="#38bdf8" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <span class="text-lg font-bold tracking-tight text-surface-900 group-hover:text-brand-600 transition-colors">SENTINEL</span>
+          <span class="text-[10px] font-mono tracking-wider ml-1.5 px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 border border-brand-200 font-semibold">v1.0.0</span>
+        </div>
+      </a>
+
+      <!-- Quick Nav Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-surface-800">
+        <a href="#about" class="hover:text-brand-600 transition-colors">About</a>
+        <a href="#vectors" class="hover:text-brand-600 transition-colors">Threat Vectors</a>
+        <a href="#simulator" class="hover:text-brand-600 transition-colors">Active Defense HUD</a>
+        <a href="#creator" class="hover:text-brand-600 transition-colors">The Developer</a>
+        <a href="#architecture" class="hover:text-brand-600 transition-colors">Architecture</a>
+      </nav>
+
+      <!-- Action Button -->
+      <div class="flex items-center gap-3">
+        <a href="https://github.com/louisthegreat938-developer/CyberShield" target="_blank" rel="noopener noreferrer" 
+           class="inline-flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-lg bg-surface-900 text-white hover:bg-brand-600 shadow-sm transition-all duration-200 hover:-translate-y-0.5">
+          <i class="fa-brands fa-github text-sm"></i>
+          <span>GitHub Repo</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden pt-16 pb-20 lg:pt-24 lg:pb-32 cyber-grid-light">
+    <!-- Gradient accent glow -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="text-center max-w-3xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 border border-brand-200 text-brand-700 text-xs font-semibold uppercase tracking-wider mb-6 shadow-sm">
+          <i class="fa-solid fa-shield-halved text-brand-600"></i>
+          IT Exhibition 2026 Showcase Project
+        </div>
+        
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-surface-900 leading-[1.15]">
+          A browser that fights back against <span class="bg-gradient-to-r from-brand-600 to-sky-500 bg-clip-text text-transparent">zero-day deception</span>.
+        </h1>
+        
+        <p class="mt-6 text-lg sm:text-xl text-surface-800 font-normal leading-relaxed">
+          Standard browsers only block bad websites <em>hours after</em> users get hacked. Sentinel rewrites the rules with on-device heuristics, intercepting lookalike domains, unencrypted transport, and credential leaks at the network level.
+        </p>
+
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
+          <a href="#simulator" class="px-6 py-3.5 rounded-xl bg-brand-600 text-white font-semibold text-sm hover:bg-brand-700 shadow-soft hover:shadow-glow transition-all duration-200 flex items-center gap-2">
+            <i class="fa-solid fa-play text-xs"></i>
+            Interactive Defense Demo
+          </a>
+          <a href="https://github.com/louisthegreat938-developer/CyberShield/releases/latest" target="_blank" 
+             class="px-6 py-3.5 rounded-xl bg-white border border-surface-300 text-surface-800 font-semibold text-sm hover:bg-surface-100 shadow-soft transition-all duration-200 flex items-center gap-2">
+            <i class="fa-brands fa-windows text-brand-600"></i>
+            Download Standalone .EXE
+          </a>
+        </div>
+      </div>
+
+      <!-- Hero Visual Dashboard Preview (Light Mockup) -->
+      <div class="mt-14 max-w-4xl mx-auto rounded-2xl glass-card p-4 sm:p-6 shadow-glass border border-surface-200/90">
+        <!-- Mock Omnibar -->
+        <div class="flex items-center gap-3 bg-surface-100/90 rounded-xl px-4 py-2.5 border border-surface-200">
+          <div class="flex items-center gap-1.5 text-emerald-600 font-semibold text-xs bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
+            <i class="fa-solid fa-shield-check"></i>
+            <span>SECURE SHIELD</span>
+          </div>
+          <span class="text-xs font-mono text-surface-800 flex-1 truncate">
+            https://bank.example.com/portal/login
+          </span>
+          <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-brand-50 text-brand-700 font-semibold">
+            TRUST INDEX: 98%
+          </span>
+        </div>
+
+        <!-- Interactive Stats Preview Row -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
+          <div class="bg-white p-4 rounded-xl border border-surface-200 shadow-sm text-center">
+            <div class="text-2xl font-bold text-brand-600 font-mono">0ms</div>
+            <div class="text-xs text-surface-800 font-medium mt-1">Pre-Render Evaluation</div>
+          </div>
+          <div class="bg-white p-4 rounded-xl border border-surface-200 shadow-sm text-center">
+            <div class="text-2xl font-bold text-emerald-600 font-mono">100%</div>
+            <div class="text-xs text-surface-800 font-medium mt-1">Lookalike Character ID</div>
+          </div>
+          <div class="bg-white p-4 rounded-xl border border-surface-200 shadow-sm text-center">
+            <div class="text-2xl font-bold text-brand-600 font-mono">Layer-4</div>
+            <div class="text-xs text-surface-800 font-medium mt-1">Tracker Interception</div>
+          </div>
+          <div class="bg-white p-4 rounded-xl border border-surface-200 shadow-sm text-center">
+            <div class="text-2xl font-bold text-sky-600 font-mono">Portable</div>
+            <div class="text-xs text-surface-800 font-medium mt-1">Zero-Install Executable</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Active Defense HUD / Attack Simulator Section -->
+  <section id="simulator" class="py-20 bg-surface-100 border-t border-surface-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-xs font-mono font-bold tracking-widest text-brand-600 uppercase">Live Exhibition Showcase</h2>
+        <p class="mt-2 text-3xl font-extrabold text-surface-900 tracking-tight sm:text-4xl">
+          Interactive Threat Interception HUD
+        </p>
+        <p class="mt-3 text-surface-800 text-sm">
+          Click any preset vector or test your own URL to watch Sentinel's heuristic engine inspect and neutralize attacks in real time before page execution.
+        </p>
+      </div>
+
+      <!-- Simulator Container -->
+      <div class="max-w-5xl mx-auto bg-white rounded-3xl p-6 sm:p-8 border border-surface-200 shadow-glass">
+        
+        <!-- URL Input & Evaluation Bar -->
+        <div class="mb-6">
+          <label for="eval-url-input" class="block text-xs font-mono uppercase font-bold text-surface-800 mb-2">
+            Target Connection Inspector:
+          </label>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <div class="flex-1 flex items-center bg-surface-50 border border-surface-200 rounded-xl px-4 py-2.5 focus-within:border-brand-500 focus-within:bg-white focus-within:ring-2 focus-within:ring-brand-200 transition-all">
+              <i class="fa-solid fa-link text-surface-400 mr-3 text-sm"></i>
+              <input type="text" id="eval-url-input" 
+                     placeholder="Type or click any preset below (e.g. https://xn--pple-43d.com)..." 
+                     value="https://xn--pple-43d.com" 
+                     class="w-full bg-transparent text-sm font-mono text-surface-900 outline-none placeholder:text-surface-400">
+            </div>
+            <button id="run-inspect-btn" class="px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm rounded-xl shadow-soft hover:shadow-glow transition-all flex items-center justify-center gap-2">
+              <i class="fa-solid fa-radar"></i>
+              <span>Evaluate URI</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Attack Preset Chips -->
+        <div class="mb-8">
+          <div class="text-xs font-mono uppercase font-bold text-surface-800 mb-2.5">
+            Exhibition Attack Lab Presets (Click to trigger):
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button class="preset-btn px-3 py-1.5 rounded-lg border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 text-xs font-semibold flex items-center gap-1.5 transition-all"
+                    data-url="https://xn--pple-43d.com">
+              <i class="fa-solid fa-mask"></i> IDN Homograph (Apple spoof)
+            </button>
+            <button class="preset-btn px-3 py-1.5 rounded-lg border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 text-xs font-semibold flex items-center gap-1.5 transition-all"
+                    data-url="http://insecure-bank-login.xyz/paypal-verification">
+              <i class="fa-solid fa-fish"></i> Deceptive Phishing Portal
+            </button>
+            <button class="preset-btn px-3 py-1.5 rounded-lg border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 text-xs font-semibold flex items-center gap-1.5 transition-all"
+                    data-url="https://verify-your-bank-securely.com">
+              <i class="fa-solid fa-biohazard"></i> Known Malware / C2 Domain
+            </button>
+            <button class="preset-btn px-3 py-1.5 rounded-lg border border-amber-200 bg-amber-50 text-amber-800 hover:bg-amber-100 text-xs font-semibold flex items-center gap-1.5 transition-all"
+                    data-url="http://neverssl.com">
+              <i class="fa-solid fa-unlock"></i> Cleartext HTTP Protocol
+            </button>
+            <button class="preset-btn px-3 py-1.5 rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 text-xs font-semibold flex items-center gap-1.5 transition-all"
+                    data-url="https://www.wikipedia.org">
+              <i class="fa-solid fa-circle-check"></i> Safe Verified Domain
+            </button>
+          </div>
+        </div>
+
+        <!-- Dynamic Results Display -->
+        <div id="sim-result-card" class="rounded-2xl border p-6 transition-all duration-300 bg-rose-50/20 border-rose-200 shadow-sm">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-surface-200/80">
+            <div class="flex items-center gap-3">
+              <div id="sim-shield-icon" class="w-12 h-12 rounded-xl flex items-center justify-center text-xl bg-rose-100 text-rose-600 shadow-sm">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+              </div>
+              <div>
+                <span id="sim-verdict" class="text-xs font-mono font-bold tracking-wider text-rose-600 uppercase">
+                  INTERCEPTED • IDN HOMOGRAPH ATTACK
+                </span>
+                <h4 id="sim-url" class="text-base font-mono font-bold text-surface-900 break-all">
+                  https://xn--pple-43d.com
+                </h4>
+              </div>
+            </div>
+
+            <!-- Score Metric Box -->
+            <div class="flex items-center gap-3 bg-white px-4 py-2.5 rounded-xl border border-surface-200 shadow-sm self-start md:self-auto">
+              <div class="text-right">
+                <div class="text-[10px] font-mono font-bold text-surface-800 uppercase tracking-wider">Trust Integrity</div>
+                <div id="sim-score" class="text-2xl font-mono font-extrabold text-rose-600">40 / 100</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Risk Analysis & Audit Logs Grid -->
+          <div class="grid md:grid-cols-2 gap-6 mt-6">
+            <!-- Detected Threats -->
+            <div>
+              <div class="text-xs font-mono uppercase font-bold text-surface-800 mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-clipboard-check text-brand-600"></i>
+                Active Heuristic Findings:
+              </div>
+              <ul id="sim-flags" class="space-y-2 text-xs font-sans">
+                <!-- Injected via JavaScript -->
+              </ul>
+            </div>
+
+            <!-- Audit Log Terminal Output -->
+            <div class="bg-surface-900 rounded-xl p-4 text-white font-mono text-xs shadow-inner flex flex-col justify-between">
+              <div class="flex items-center justify-between pb-2 mb-2 border-b border-surface-800 text-[11px] text-surface-400">
+                <span class="flex items-center gap-1.5"><i class="fa-solid fa-terminal text-brand-500"></i> SENTINEL KERNEL LOG</span>
+                <span id="sim-timestamp">ACTIVE</span>
+              </div>
+              <div id="sim-log-terminal" class="space-y-1.5 text-surface-300 font-mono text-[11px] overflow-y-auto max-h-36">
+                <!-- Injected via JavaScript -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Problem vs Solution (Why Sentinel Exists) -->
+  <section id="about" class="py-20 bg-white border-y border-surface-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <h2 class="text-xs font-mono font-bold tracking-widest text-brand-600 uppercase">Core Philosophy</h2>
+        <p class="mt-2 text-3xl font-extrabold text-surface-900 tracking-tight sm:text-4xl">
+          The Web Isn't Broken. The Timing Is.
+        </p>
+        <p class="mt-4 text-surface-800 text-base">
+          Legacy browsers rely on centralized blocklists. Sentinel replaces latency-heavy cloud lookups with immediate heuristic threat containment.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 items-stretch">
+        <!-- Conventional Browser Box -->
+        <div class="p-8 rounded-2xl bg-surface-50 border border-surface-200 flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl mb-6">
+              <i class="fa-solid fa-hourglass-half"></i>
+            </div>
+            <h3 class="text-xl font-bold text-surface-900 mb-3">Traditional Reactive Security</h3>
+            <ul class="space-y-3 text-sm text-surface-800">
+              <li class="flex items-start gap-2.5">
+                <i class="fa-solid fa-circle-xmark text-rose-500 mt-1"></i>
+                <span>Phishing domains stay live for 4 to 24 hours before added to shared global blocklists.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i class="fa-solid fa-circle-xmark text-rose-500 mt-1"></i>
+                <span>Cyrillic and Greek homographs render convincingly, spoofing domains like Apple or PayPal.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i class="fa-solid fa-circle-xmark text-rose-500 mt-1"></i>
+                <span>Browsers quietly downgrade connections or allow background beacons without real telemetry transparency.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-8 pt-4 border-t border-surface-200 text-xs font-mono text-rose-600 font-semibold">
+            STATUS: VULNERABLE TO ZERO-DAY SPREAD
+          </div>
+        </div>
+
+        <!-- Sentinel Solution Box -->
+        <div class="p-8 rounded-2xl bg-gradient-to-br from-brand-50 to-white border-2 border-brand-500/30 shadow-glass flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute -right-8 -top-8 w-32 h-32 bg-brand-500/10 rounded-full blur-2xl pointer-events-none"></div>
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-brand-600 text-white flex items-center justify-center text-xl mb-6 shadow-soft">
+              <i class="fa-solid fa-shield-virus"></i>
+            </div>
+            <h3 class="text-xl font-bold text-surface-900 mb-3">Sentinel Active Containment</h3>
+            <ul class="space-y-3 text-sm text-surface-800">
+              <li class="flex items-start gap-2.5">
+                <i class="fa-solid fa-circle-check text-emerald-600 mt-1"></i>
+                <span><strong>Instant Punycode Inspection:</strong> Flags lookalike UTF-8 characters on the spot.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i class="fa-solid fa-circle-check text-emerald-600 mt-1"></i>
+                <span><strong>Heuristic Keyword Matrices:</strong> Catches high-entropy subdomains and credential scam patterns before page execution.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i class="fa-solid fa-circle-check text-emerald-600 mt-1"></i>
+                <span><strong>Transparent User Education:</strong> Lockdown overlays explain the exact hazard vector so users build intuition.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="mt-8 pt-4 border-t border-brand-200 text-xs font-mono text-brand-700 font-semibold flex items-center justify-between">
+            <span>STATUS: AUTONOMOUS INTERCEPTION ACTIVE</span>
+            <i class="fa-solid fa-bolt text-brand-600"></i>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- About the Creator / Lead Architect Section -->
+  <section id="creator" class="py-20 bg-white border-y border-surface-200 relative overflow-hidden">
+    <!-- Subtle background radial glow -->
+    <div class="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-brand-100/50 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <h2 class="text-xs font-mono font-bold tracking-widest text-brand-600 uppercase">Engineering & Vision</h2>
+        <p class="mt-2 text-3xl font-extrabold text-surface-900 tracking-tight sm:text-4xl">
+          About the Lead Architect
+        </p>
+        <p class="mt-3 text-surface-800 text-sm">
+          Crafted from the ground up for the School IT Exhibition to bridge the divide between theoretical cybersecurity and intuitive consumer protection.
+        </p>
+      </div>
+
+      <!-- Developer Profile Card -->
+      <div class="max-w-4xl mx-auto glass-card rounded-3xl p-8 sm:p-10 border border-surface-200 shadow-glass relative overflow-hidden">
+        <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8">
+          
+          <!-- Avatar & Quick Badge Column -->
+          <div class="flex flex-col items-center text-center flex-shrink-0">
+            <div class="relative group">
+              <!-- Animated gradient border ring -->
+              <div class="w-32 h-32 rounded-2xl bg-gradient-to-tr from-brand-600 via-sky-400 to-indigo-600 p-1 shadow-glow transition-transform duration-300 group-hover:scale-105">
+                <div class="w-full h-full bg-surface-50 rounded-[14px] flex flex-col items-center justify-center p-3 text-surface-900 relative overflow-hidden">
+                  <div class="w-16 h-16 rounded-xl bg-brand-50 border border-brand-200 flex items-center justify-center text-brand-600 text-3xl mb-1 shadow-sm">
+                    <i class="fa-solid fa-code"></i>
+                  </div>
+                  <span class="text-[11px] font-mono font-bold tracking-tight text-brand-700">DEV // ARCH</span>
+                </div>
+              </div>
+              <div class="absolute -bottom-2.5 -right-2 bg-emerald-500 border-2 border-white w-6 h-6 rounded-full flex items-center justify-center text-[10px] text-white shadow-sm" title="Active Core Maintainer">
+                <i class="fa-solid fa-check"></i>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-200">
+                <i class="fa-solid fa-trophy text-[11px]"></i>
+                Exhibition Lead
+              </span>
+            </div>
+          </div>
+
+          <!-- Bio & Credentials Details -->
+          <div class="flex-1 text-center lg:text-left">
+            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-2">
+              <h3 class="text-2xl font-extrabold text-surface-900">
+                louisthegreat938-developer
+              </h3>
+              <a href="https://github.com/louisthegreat938-developer" target="_blank" rel="noopener noreferrer" 
+                 class="text-xs font-mono px-2.5 py-1 rounded-md bg-surface-100 hover:bg-surface-200 text-surface-800 transition-colors flex items-center gap-1.5 font-semibold">
+                <i class="fa-brands fa-github text-sm"></i>
+                @louisthegreat938-developer
+              </a>
+            </div>
+
+            <div class="text-sm font-medium text-brand-600 mb-4 flex items-center justify-center lg:justify-start gap-2">
+              <span>Creator of Sentinel CyberShield</span>
+              <span>•</span>
+              <span class="text-surface-800">Student Developer & Security Researcher</span>
+            </div>
+
+            <p class="text-sm text-surface-800 leading-relaxed mb-6">
+              "Most internet users fall for scams not because they are careless, but because cybercriminals exploit cognitive blindspots. Sentinel was conceived as an exhibition project to prove that defense shouldn't be passive—it should actively shield, educate, and empower every user in real-time."
+            </p>
+
+            <!-- Skill Matrix Chips -->
+            <div class="mb-6">
+              <div class="text-xs font-mono uppercase text-surface-800 font-bold tracking-wider mb-2.5">
+                Technical Mastery & Domain Focus
+              </div>
+              <div class="flex flex-wrap gap-2 justify-center lg:justify-start">
+                <span class="px-3 py-1 rounded-lg text-xs font-medium bg-surface-100 border border-surface-200 text-surface-900 flex items-center gap-1.5">
+                  <i class="fa-solid fa-shield-cat text-brand-600"></i> Proactive Threat Heuristics
+                </span>
+                <span class="px-3 py-1 rounded-lg text-xs font-medium bg-surface-100 border border-surface-200 text-surface-900 flex items-center gap-1.5">
+                  <i class="fa-brands fa-node-js text-emerald-600"></i> Electron & Node.js Runtime
+                </span>
+                <span class="px-3 py-1 rounded-lg text-xs font-medium bg-surface-100 border border-surface-200 text-surface-900 flex items-center gap-1.5">
+                  <i class="fa-solid fa-network-wired text-sky-600"></i> Chromium Network Hooking
+                </span>
+                <span class="px-3 py-1 rounded-lg text-xs font-medium bg-surface-100 border border-surface-200 text-surface-900 flex items-center gap-1.5">
+                  <i class="fa-solid fa-palette text-amber-600"></i> Light Mode HUD UI/UX
+                </span>
+                <span class="px-3 py-1 rounded-lg text-xs font-medium bg-surface-100 border border-surface-200 text-surface-900 flex items-center gap-1.5">
+                  <i class="fa-solid fa-box-open text-purple-600"></i> Standalone Windows Packaging
+                </span>
+              </div>
+            </div>
+
+            <!-- Action Link Buttons -->
+            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-4 border-t border-surface-100">
+              <a href="https://github.com/louisthegreat938-developer" target="_blank" rel="noopener noreferrer" 
+                 class="px-5 py-2.5 rounded-xl bg-surface-900 text-white font-semibold text-xs hover:bg-brand-600 shadow-sm transition-all duration-200 flex items-center gap-2">
+                <i class="fa-brands fa-github text-sm"></i>
+                Follow on GitHub
+              </a>
+              <a href="https://github.com/louisthegreat938-developer/CyberShield" target="_blank" rel="noopener noreferrer" 
+                 class="px-5 py-2.5 rounded-xl bg-white border border-surface-200 text-surface-800 font-semibold text-xs hover:bg-surface-50 shadow-sm transition-all duration-200 flex items-center gap-2">
+                <i class="fa-regular fa-star text-amber-500"></i>
+                Star Project Repository
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Technical Stack Overview -->
+  <section id="architecture" class="py-20 bg-surface-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <h2 class="text-xs font-mono font-bold tracking-widest text-brand-600 uppercase">System Design</h2>
+        <p class="mt-2 text-3xl font-extrabold text-surface-900 tracking-tight sm:text-4xl">
+          Engineered for Performance and Sandboxing
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-2xl border border-surface-200 shadow-soft">
+          <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold text-sm mb-4">
+            01
+          </div>
+          <h4 class="text-base font-bold text-surface-900 mb-2">Electron & Chromium Core</h4>
+          <p class="text-xs text-surface-800 leading-relaxed">
+            Harnesses modern Chromium web components while decoupling Node.js runtime permissions via safe context bridges for rock-solid process separation.
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-surface-200 shadow-soft">
+          <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold text-sm mb-4">
+            02
+          </div>
+          <h4 class="text-base font-bold text-surface-900 mb-2">Isolated Security Engine</h4>
+          <p class="text-xs text-surface-800 leading-relaxed">
+            All URI evaluation, punycode conversions, and heuristics execute in an isolated background thread prior to initiating rendering cycles.
+          </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-surface-200 shadow-soft">
+          <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center font-bold text-sm mb-4">
+            03
+          </div>
+          <h4 class="text-base font-bold text-surface-900 mb-2">Light Canvas HUD</h4>
+          <p class="text-xs text-surface-800 leading-relaxed">
+            Clean, slate-and-cobalt user interface engineered to present security decisions clearly, stripping away confusing cryptographic jargon.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Exhibition Callout / Footer -->
+  <footer class="mt-auto bg-white border-t border-surface-200 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-brand-600 text-white flex items-center justify-center shadow-soft">
+            <i class="fa-solid fa-shield text-sm"></i>
+          </div>
+          <div>
+            <div class="text-sm font-bold text-surface-900">SENTINEL CYBERSHIELD</div>
+            <div class="text-xs text-surface-800">Presented for the Annual School IT Exhibition</div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-6 text-sm text-surface-800">
+          <a href="https://github.com/louisthegreat938-developer/CyberShield" target="_blank" class="hover:text-brand-600 transition-colors flex items-center gap-2">
+            <i class="fa-brands fa-github text-base"></i>
+            <span>louisthegreat938-developer/CyberShield</span>
+          </a>
+          <span class="text-surface-300">|</span>
+          <span class="text-xs text-surface-800 font-mono">License: MIT</span>
+        </div>
+
+      </div>
+      
+      <div class="mt-8 pt-6 border-t border-surface-100 text-center text-xs text-surface-800">
+        Empowering everyday web navigators through proactive heuristic awareness.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Threat Simulator Script -->
+  <script>
+    // Pure self-contained security heuristic evaluator
+    function runSecurityAnalysis(targetUrl) {
+      const url = targetUrl.trim();
+      const report = {
+        url: url,
+        score: 100,
+        risk: 'LOW',
+        verdict: 'SESSION PERMITTED • NORMAL INTEGRITY',
+        flags: [],
+        logs: []
+      };
+
+      try {
+        let parsed;
+        if (!/^https?:\/\//i.test(url)) {
+          parsed = new URL('https://' + url);
+        } else {
+          parsed = new URL(url);
+        }
+
+        report.logs.push(`[${new Date().toLocaleTimeString()}] Parsing request target: ${parsed.hostname}`);
+
+        // 1. Blacklist Check
+        const blacklisted = [
+          'verify-your-bank-securely.com',
+          'evil-malware-test.com',
+          'phishing-demo-site.org'
+        ];
+        if (blacklisted.some(d => parsed.hostname.includes(d))) {
+          report.flags.push({ text: "Exact match on Global Malware & C2 Command Server registry.", type: "danger" });
+          report.score = 0;
+          report.risk = 'CRITICAL';
+          report.verdict = 'CONNECTION ABORTED • MALWARE / C2 BLACKLIST';
+          report.logs.push(`[CRITICAL] Domain match found in global zero-trust blocklist.`);
+          return report;
+        }
+
+        // 2. Homograph / Punycode
+        if (parsed.hostname.startsWith('xn--') || parsed.hostname.includes('.xn--')) {
+          report.flags.push({ text: "IDN Homograph exploit: Punycode disguise replaces Latin characters with Cyrillic lookalikes.", type: "danger" });
+          report.flags.push({ text: "Phishing vulnerability: Masquerades visually as apple.com to deceive human eye.", type: "danger" });
+          report.score -= 60;
+          report.risk = 'CRITICAL';
+          report.verdict = 'INTERCEPTED • IDN HOMOGRAPH LOOKALIKE';
+          report.logs.push(`[WARN] Disguised Unicode sequence decoded: Punycode prefix triggered filter.`);
+        }
+
+        // 3. Cleartext Protocol Check
+        if (parsed.protocol === 'http:') {
+          report.flags.push({ text: "Insecure transport protocol (Cleartext HTTP detected - vulnerable to Wi-Fi sniffing).", type: "warning" });
+          report.score -= 25;
+          report.logs.push(`[WARN] Destination lacks TLS/SSL encryption.`);
+          if (report.risk !== 'CRITICAL') {
+            report.risk = 'MEDIUM';
+            report.verdict = 'CAUTION • UNENCRYPTED TRANSPORT PROTOCOL';
+          }
+        }
+
+        // 4. Deceptive Keywords
+        const deceptiveWords = ['login', 'verify', 'paypal', 'account', 'recover', 'banking'];
+        const matched = deceptiveWords.filter(w => url.toLowerCase().includes(w));
+        if (matched.length > 0) {
+          report.flags.push({ text: `Credential harvesting heuristic flagged key terms: [${matched.join(', ')}].`, type: "danger" });
+          report.score -= 40;
+          report.risk = 'CRITICAL';
+          report.verdict = 'BLOCKED • CREDENTIAL HARVESTING HEURISTIC';
+          report.logs.push(`[WARN] Target URL path or query contains sensitive credential trigger terms.`);
+        }
+
+        // 5. Suspicious TLD
+        const suspiciousTLDs = ['.xyz', '.click', '.top', '.work', '.tk'];
+        if (suspiciousTLDs.some(tld => parsed.hostname.endsWith(tld))) {
+          report.flags.push({ text: "High-risk disposable Top-Level Domain (frequently used in automated phishing).", type: "danger" });
+          report.score -= 25;
+          report.logs.push(`[WARN] TLD categorized as high-risk spam vector.`);
+        }
+
+        // Final score bounds
+        report.score = Math.max(0, Math.min(100, report.score));
+        if (report.score === 100) {
+          report.flags.push({ text: "Valid TLS 1.3 encryption protocol active and verified.", type: "secure" });
+          report.flags.push({ text: "Zero homographs or suspicious character sets detected.", type: "secure" });
+          report.flags.push({ text: "Standard reputation domain hierarchy validated.", type: "secure" });
+          report.logs.push(`[INFO] Clean integrity verification passed without incident.`);
+        }
+
+      } catch (err) {
+        report.score = 0;
+        report.risk = 'CRITICAL';
+        report.verdict = 'ERROR • MALFORMED URI';
+        report.flags.push({ text: "Malformed address or unparseable protocol syntax.", type: "danger" });
+        report.logs.push(`[ERROR] Failed to parse target structure.`);
+      }
+
+      return report;
+    }
+
+    // Update the UI card with simulation results
+    function updateSimulatorUI(result) {
+      const card = document.getElementById('sim-result-card');
+      const shieldIcon = document.getElementById('sim-shield-icon');
+      const urlDisp = document.getElementById('sim-url');
+      const verdictDisp = document.getElementById('sim-verdict');
+      const scoreDisp = document.getElementById('sim-score');
+      const flagsList = document.getElementById('sim-flags');
+      const logTerminal = document.getElementById('sim-log-terminal');
+      const timestampDisp = document.getElementById('sim-timestamp');
+
+      urlDisp.textContent = result.url;
+      verdictDisp.textContent = result.verdict;
+      scoreDisp.textContent = `${result.score} / 100`;
+      timestampDisp.textContent = new Date().toLocaleTimeString();
+
+      // Color states
+      if (result.risk === 'CRITICAL') {
+        shieldIcon.className = 'w-12 h-12 rounded-xl flex items-center justify-center text-xl bg-rose-100 text-rose-600 shadow-sm';
+        shieldIcon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+        verdictDisp.className = 'text-xs font-mono font-bold tracking-wider text-rose-600 uppercase';
+        scoreDisp.className = 'text-2xl font-mono font-extrabold text-rose-600';
+        card.className = 'rounded-2xl border p-6 transition-all duration-300 bg-rose-50/20 border-rose-200 shadow-sm';
+      } else if (result.risk === 'MEDIUM') {
+        shieldIcon.className = 'w-12 h-12 rounded-xl flex items-center justify-center text-xl bg-amber-100 text-amber-600 shadow-sm';
+        shieldIcon.innerHTML = '<i class="fa-solid fa-shield-halved"></i>';
+        verdictDisp.className = 'text-xs font-mono font-bold tracking-wider text-amber-600 uppercase';
+        scoreDisp.className = 'text-2xl font-mono font-extrabold text-amber-600';
+        card.className = 'rounded-2xl border p-6 transition-all duration-300 bg-amber-50/20 border-amber-200 shadow-sm';
+      } else {
+        shieldIcon.className = 'w-12 h-12 rounded-xl flex items-center justify-center text-xl bg-emerald-100 text-emerald-600 shadow-sm';
+        shieldIcon.innerHTML = '<i class="fa-solid fa-shield-check"></i>';
+        verdictDisp.className = 'text-xs font-mono font-bold tracking-wider text-emerald-600 uppercase';
+        scoreDisp.className = 'text-2xl font-mono font-extrabold text-emerald-600';
+        card.className = 'rounded-2xl border p-6 transition-all duration-300 bg-emerald-50/20 border-emerald-200 shadow-sm';
+      }
+
+      // Populate findings
+      flagsList.innerHTML = '';
+      result.flags.forEach(f => {
+        const li = document.createElement('li');
+        li.className = 'flex items-start gap-2 leading-relaxed';
+        if (f.type === 'danger') {
+          li.innerHTML = `<i class="fa-solid fa-circle-exclamation text-rose-500 mt-0.5 flex-shrink-0"></i><span class="text-rose-900 font-medium">${f.text}</span>`;
+        } else if (f.type === 'warning') {
+          li.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-amber-500 mt-0.5 flex-shrink-0"></i><span class="text-amber-900 font-medium">${f.text}</span>`;
+        } else {
+          li.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-500 mt-0.5 flex-shrink-0"></i><span class="text-emerald-900 font-medium">${f.text}</span>`;
+        }
+        flagsList.appendChild(li);
+      });
+
+      // Populate logs
+      logTerminal.innerHTML = '';
+      result.logs.forEach(log => {
+        const div = document.createElement('div');
+        div.textContent = log;
+        logTerminal.appendChild(div);
+      });
+      const endLog = document.createElement('div');
+      endLog.className = 'text-brand-400 font-bold';
+      endLog.textContent = `> Sentinel Defense Protocol Completed. Verdict code: ${result.risk}`;
+      logTerminal.appendChild(endLog);
+    }
+
+    // Bind event listeners once DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      const input = document.getElementById('eval-url-input');
+      const inspectBtn = document.getElementById('run-inspect-btn');
+      const presetButtons = document.querySelectorAll('.preset-btn');
+
+      // Manual input evaluation
+      function triggerEval() {
+        const urlToTest = input.value || 'https://xn--pple-43d.com';
+        const res = runSecurityAnalysis(urlToTest);
+        updateSimulatorUI(res);
+      }
+
+      inspectBtn.addEventListener('click', triggerEval);
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') triggerEval();
+      });
+
+      // Preset click listeners
+      presetButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const presetUrl = btn.getAttribute('data-url');
+          input.value = presetUrl;
+          const res = runSecurityAnalysis(presetUrl);
+          updateSimulatorUI(res);
+        });
+      });
+
+      // Run initial default evaluation on load
+      triggerEval();
+    });
+  </script>
+</body>
+</html>
